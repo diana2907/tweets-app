@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/tweets-app/static/css/main.05ef548a.css",
-    "main.js": "/tweets-app/static/js/main.8fa4ae8d.js",
+    "main.css": "/tweets-app/static/css/main.cd5db619.css",
+    "main.js": "/tweets-app/static/js/main.59a0d79a.js",
+    "static/media/Montserrat-VariableFont_wght.ttf": "/tweets-app/static/media/Montserrat-VariableFont_wght.c28a96c369871653b853.ttf",
     "static/media/backgraundImage.png": "/tweets-app/static/media/backgraundImage.b3d9942b3f9d5dad1ff0.png",
     "static/media/logo.svg": "/tweets-app/static/media/logo.e917114d7945c04c85a8946a331d28b6.svg",
     "index.html": "/tweets-app/index.html",
-    "main.05ef548a.css.map": "/tweets-app/static/css/main.05ef548a.css.map",
-    "main.8fa4ae8d.js.map": "/tweets-app/static/js/main.8fa4ae8d.js.map"
+    "main.cd5db619.css.map": "/tweets-app/static/css/main.cd5db619.css.map",
+    "main.59a0d79a.js.map": "/tweets-app/static/js/main.59a0d79a.js.map"
   },
   "entrypoints": [
-    "static/css/main.05ef548a.css",
-    "static/js/main.8fa4ae8d.js"
+    "static/css/main.cd5db619.css",
+    "static/js/main.59a0d79a.js"
   ]
 }
