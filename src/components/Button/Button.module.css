@@ -19,8 +19,11 @@
   text-transform: uppercase;
   color: #373737;
 }
+.button.isSelected {
+  background-color: #5cd3a8;
+}
 
 .button:hover,
 .button:active {
-  background-color: aqua;
+  background-color: #5cd3a8;
 }

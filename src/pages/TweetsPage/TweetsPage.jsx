@@ -10,29 +10,46 @@ export const TweetsPage = () => {
   const [usersList, setUsersList] = useState([]);
   const [page, setPage] = useState(1);
   const [showBtn, setShowBtn] = useState(true);
+  const [status, setStatus] = useState('all');
 
   const location = useLocation();
-
   const backLinkHref = location.state?.from ?? '/';
 
   useEffect(() => {
-    getUsers('?page=1&limit=3').then(data => {
-      setUsersList(data);
+    getUsers().then(data => {
+      if (status === 'all') {
+        const sliced = data.slice(0, 3 * page);
+        setUsersList(sliced);
+        if (page < data.length / 3) {
+          setShowBtn(true);
+        } else {
+          setShowBtn(false);
+        }
+      } else if (status === 'following') {
+        const following = data.filter(
+          item => JSON.parse(window.localStorage.getItem(item.id)) === true
+        );
+        const followingList = following.slice(0, 3 * page);
+        setUsersList(followingList);
+        if (page < following.length / 3) {
+          setShowBtn(true);
+        } else {
+          setShowBtn(false);
+        }
+      } else if (status === 'follow') {
+        const follow = data.filter(
+          item => JSON.parse(window.localStorage.getItem(item.id)) === false
+        );
+        const followList = follow.slice(0, 3 * page);
+        setUsersList(followList);
+        if (page < follow.length / 3) {
+          setShowBtn(true);
+        } else {
+          setShowBtn(false);
+        }
+      }
     });
-  }, []);
-
-  useEffect(() => {
-    if (page > 1) {
-      getUsers(`?page=${page}&limit=3`).then(data => {
-        setUsersList(prevState => [...prevState, ...data]);
-      });
-    }
-    if (page < 15 / 3) {
-      setShowBtn(true);
-    } else {
-      setShowBtn(false);
-    }
-  }, [page]);
+  }, [page, status]);
 
   const onBtnClick = () => {
     setPage(prevState => prevState + 1);
@@ -40,29 +57,15 @@ export const TweetsPage = () => {
 
   const changeStatus = evt => {
     const currentButton = evt.target.name;
+    setPage(1);
 
-    getUsers().then(data => {
-      const following = data.filter(
-        item => JSON.parse(window.localStorage.getItem(item.id)) === true
-      );
-      const follow = data.filter(
-        item => JSON.parse(window.localStorage.getItem(item.id)) === false
-      );
-
-      const all = data;
-
-      if (currentButton === 'following') {
-        setUsersList(following);
-      } else if (currentButton === 'follow') {
-        setUsersList(follow);
-      } else setUsersList(all);
-
-      if (page < following.length / 3) {
-        setShowBtn(true);
-      } else {
-        setShowBtn(false);
-      }
-    });
+    if (currentButton === 'following') {
+      setStatus('following');
+    } else if (currentButton === 'follow') {
+      setStatus('follow');
+    } else {
+      setStatus('all');
+    }
   };
 
   return (
@@ -70,7 +73,7 @@ export const TweetsPage = () => {
       <BackLink to={backLinkHref}>
         <p>Back to home</p>
       </BackLink>
-      <Filter changeStatus={changeStatus} />
+      <Filter status={status} changeStatus={changeStatus} />
       <AppTweets users={usersList} />
       {showBtn && <LoadMore onBtnClick={onBtnClick} />}
     </div>
